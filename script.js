@@ -12,7 +12,6 @@
 
 4) Потренироваться и переписать цикл еще двумя способами*/
 
-'use strict';
 
 // Код возьмите из предыдущего домашнего задания
 'use strict';
@@ -20,41 +19,41 @@
 const numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
 
 const personalMovieDB = {
-    count: numberOfFilms,
-    movies: {},
-    actors: {},
-    genres: [],
-    privat: false
+  count: numberOfFilms,
+  movies: {},
+  actors: {},
+  genres: [],
+  privat: false
 };
 
 
 for (let i = 0; i < 2; i++) {
 
-    let a;
-    let b;
-    do {
-        a = prompt('Один из последних просмотренных фильмов?', '');
-      } while (a === null || a === '' || a.length > 50 );
-    do {
-        b = prompt('На сколько оцените его?', '');
-    } while (b === null || b === '' || b.length > 50 );
+  let a;
+  let b;
+  do {
+    a = prompt('Один из последних просмотренных фильмов?', '');
+  } while (a === null || a === '' || a.length > 50);
+  do {
+    b = prompt('На сколько оцените его?', '');
+  } while (b === null || b === '' || b.length > 50);
 
-    personalMovieDB.movies[a] = b;
+  personalMovieDB.movies[a] = b;
 }
 
 switch (numberOfFilms) {
-    case numberOfFilms < 10:
-      alert( 'Просмотрено довольно мало фильмов' );
-      break;
-    case 10<numberOfFilms<30:
-      alert( 'Вы классический зритель!' );
-      break;
-    case numberOfFilms > 30:
-      alert( 'Вы киноман' );
-      break;
-    default:
-      alert( "Произошла ошибка" );
-  }
+  case numberOfFilms < 10:
+    alert('Просмотрено довольно мало фильмов');
+    break;
+  case 10 < numberOfFilms < 30:
+    alert('Вы классический зритель!');
+    break;
+  case numberOfFilms > 30:
+    alert('Вы киноман');
+    break;
+  default:
+    alert("Произошла ошибка");
+}
 
 console.log(personalMovieDB);
 
