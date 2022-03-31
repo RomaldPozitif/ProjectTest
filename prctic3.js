@@ -81,11 +81,8 @@ function showMyDB() {
 showMyDB();
 
 function writeYourGenres() {
-  let serialNumber = 1;
-  for (let i = 0; i < 3; i++) {
-    let genrQuation = prompt("Ваш любимый жанр под номером " + serialNumber, '');
-    personalMovieDB.genres.push(genrQuation);
-    serialNumber++;
+  for (let i = 1; i < 4; i++) {
+    personalMovieDB.genres.push(prompt(`Ваш любимый жанр под номером ${i}`, ''));
   }
 }
 
