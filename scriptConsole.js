@@ -42,7 +42,17 @@
 
 //string and number
 
-const str = `text`;
-const num = 14;
+const str = `text and not right`;
 
-console.log(str.toUpperCase());
+
+//console.log(str.slice(3, 6));
+
+//console.log(str.substr(4, 6));
+
+const num = 111.2;
+
+console.log(Math.round(num));
+
+const test = '12.2px';
+
+console.log(parseFloat(test));
