@@ -89,3 +89,4 @@ function writeYourGenres() {
 writeYourGenres();
 
 // Код возьмите из предыдущего домашнего задания
+//sdfsf
