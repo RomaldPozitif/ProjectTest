@@ -90,7 +90,6 @@ personalMovieDB
   .showMyDB()
   .writeYourGenres()
   .toggleVisibleMyDB();
-// console.log(true);
-// console.log(!true);
+
 
 
