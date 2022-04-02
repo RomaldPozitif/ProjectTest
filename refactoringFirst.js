@@ -83,13 +83,13 @@ const personalMovieDB = {
   }
 
 };
-personalMovieDB
-  .start()
-  .rememberMyFilms()
-  .detectPersonalLevel()
-  .showMyDB()
-  .writeYourGenres()
-  .toggleVisibleMyDB();
+// personalMovieDB
+//   .start()
+//   .rememberMyFilms()
+//   .detectPersonalLevel()
+//   .showMyDB()
+//   .writeYourGenres()
+//   .toggleVisibleMyDB();
 
 
 
