@@ -43,47 +43,87 @@ P.S. Здесь есть несколько вариантов решения з
 
 'use strict';
 
+document.addEventListener('DOMContentLoaded', () => {
+  const movieDB = {
+    movies: [
+      "Логан",
+      "Лига справедливости",
+      "Ла-ла лэнд",
+      "Одержимость",
+      "Скотт Пилигрим против..."
+    ]
+  };
 
 
-const movieDB = {
-  movies: [
-    "Логан",
-    "Лига справедливости",
-    "Ла-ла лэнд",
-    "Одержимость",
-    "Скотт Пилигрим против..."
-  ]
-};
+  const adv = document.querySelectorAll('.promo__adv img'),
+    poster = document.querySelector('.promo__bg'),
+    genre = poster.querySelector('.promo__genre'),
+    movieList = document.querySelector('.promo__interactive-list'),
+    addForm = document.querySelector('form.add'),
+    addInput = addForm.querySelector('.adding__input'),
+    checkbox = addForm.querySelector('[type="checkbox"]');
+
+  addForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    let newFilm = addInput.value;
+    const favorit = checkbox.checked;
 
 
 
-//console.log(movieDB.movies);
+    if (newFilm) {
+      if (newFilm.length > 21) {
+        newFilm = `${newFilm.substr(0, 22)}...`;
+      }
 
-const advertising = document.querySelectorAll('.promo__adv img'),
-  poster = document.querySelector('.promo__bg'),
-  genre = poster.querySelector('.promo__genre'),
-  films = document.querySelector('.promo__interactive-list');
+      if (favorit) {
+        console.log('Добавляем любимый фильм');
+      }
+      movieDB.movies.push(newFilm);
+      sortArr(movieDB.movies);
+      createMovieList(movieDB.movies, movieList);
+    }
+    event.target.reset();
 
 
-//1)
-advertising.forEach(item => {
-  item.remove();
-});
-//2)
-genre.textContent = 'драма';
-//3)
-poster.style.backgroundImage = 'url("img/bg.jpg")';
 
-//4, 5)
-films.innerHTML = ``;
+  });
 
-movieDB.movies.sort();
 
-movieDB.movies.forEach((film, i) => {
-  films.innerHTML += `
-  <li class="promo__interactive-item">${i + 1}  ${film}
+  const deleteAdv = (arr) => {
+    arr.forEach(item => {
+      item.remove();
+    });
+  };
+  const makeChanging = () => {
+    genre.textContent = 'драма';
+
+    poster.style.backgroundImage = 'url("img/bg.jpg")';
+  };
+  const sortArr = (arr) => {
+    arr.sort();
+  };
+  function createMovieList(films, parent) {
+    parent.innerHTML = ``;
+    sortArr(films);
+    films.forEach((film, i) => {
+      parent.innerHTML += `
+          <li class="promo__interactive-item">${i + 1}  ${film}
                             <div class="delete"></div>
                         </li>
+          `;
+    });
 
-  `;
+    document.querySelectorAll('.delete').forEach((btn, i) => {
+      btn.addEventListener('click', () => {
+        btn.parentElement.remove();
+        films.splice(i, 1);
+        createMovieList(films, movieList);
+      });
+    });
+  }
+
+
+  deleteAdv(adv);
+  makeChanging();
+  createMovieList(movieDB.movies, movieList);
 });
