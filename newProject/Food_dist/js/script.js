@@ -1,17 +1,22 @@
-window.addEventListener('DOMContentLoaded', () => {
-  //tabs
-  const tabs = document.querySelectorAll('.tabheader__item'),
+
+
+window.addEventListener('DOMContentLoaded', function () {
+
+  // Tabs
+
+  let tabs = document.querySelectorAll('.tabheader__item'),
     tabsContent = document.querySelectorAll('.tabcontent'),
     tabsParent = document.querySelector('.tabheader__items');
 
   function hideTabContent() {
+
     tabsContent.forEach(item => {
       item.classList.add('hide');
       item.classList.remove('show', 'fade');
     });
 
-    tabs.forEach(items => {
-      items.classList.remove('tabheader__item_active');
+    tabs.forEach(item => {
+      item.classList.remove('tabheader__item_active');
     });
   }
 
@@ -24,9 +29,8 @@ window.addEventListener('DOMContentLoaded', () => {
   hideTabContent();
   showTabContent();
 
-  tabsParent.addEventListener('click', (event) => {
+  tabsParent.addEventListener('click', function (event) {
     const target = event.target;
-    console.log('object');
     if (target && target.classList.contains('tabheader__item')) {
       tabs.forEach((item, i) => {
         if (target == item) {
@@ -37,20 +41,17 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  //Timer
+  // Timer
 
-  const deadline = '2022-05-11';
-  const days = document.querySelector('#days'),
-    hours = document.querySelector('#hours'),
-    minutes = document.querySelector('#minutes'),
-    seconds = document.querySelector('#seconds');
+  const deadline = '2022-06-11';
 
   function getTimeRemaining(endtime) {
     const t = Date.parse(endtime) - Date.parse(new Date()),
-      days = Math.floor(t / (1000 * 60 * 60 * 24)),
-      hours = Math.floor((t / (1000 * 60 * 60)) % 24),
-      minutes = Math.floor((t / (1000 * 60)) % 60),
-      seconds = Math.floor((t / (1000)) % 60);
+      days = Math.floor((t / (1000 * 60 * 60 * 24))),
+      seconds = Math.floor((t / 1000) % 60),
+      minutes = Math.floor((t / 1000 / 60) % 60),
+      hours = Math.floor((t / (1000 * 60 * 60) % 24));
+
     return {
       'total': t,
       'days': days,
@@ -62,23 +63,23 @@ window.addEventListener('DOMContentLoaded', () => {
 
   function getZero(num) {
     if (num >= 0 && num < 10) {
-      return `0${num}`;
+      return '0' + num;
     } else {
       return num;
     }
   }
 
-
-
   function setClock(selector, endtime) {
+
     const timer = document.querySelector(selector),
-      days = document.querySelector('#days'),
-      hours = document.querySelector('#hours'),
-      minutes = document.querySelector('#minutes'),
-      seconds = document.querySelector('#seconds'),
+      days = timer.querySelector("#days"),
+      hours = timer.querySelector('#hours'),
+      minutes = timer.querySelector('#minutes'),
+      seconds = timer.querySelector('#seconds'),
       timeInterval = setInterval(updateClock, 1000);
 
     updateClock();
+
     function updateClock() {
       const t = getTimeRemaining(endtime);
 
@@ -95,21 +96,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
   setClock('.timer', deadline);
 
-  //Modal
+  // Modal
 
   const modalTrigger = document.querySelectorAll('[data-modal]'),
     modal = document.querySelector('.modal'),
     modalCloseBtn = document.querySelector('[data-close]');
 
-  modalTrigger.forEach((btn) => {
-    btn.addEventListener('click', openModal());
+  modalTrigger.forEach(btn => {
+    btn.addEventListener('click', openModal);
   });
-
-  function openModal() {
-    modal.classList.add('show');
-    modal.classList.remove('hide');
-    document.body.style.overflow = 'hidden';
-  }
 
   function closeModal() {
     modal.classList.add('hide');
@@ -117,8 +112,14 @@ window.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = '';
   }
 
-  modalCloseBtn.addEventListener('click', closeModal());
+  function openModal() {
+    modal.classList.add('show');
+    modal.classList.remove('hide');
+    document.body.style.overflow = 'hidden';
+    clearInterval(modalTimerId);
+  }
 
+  modalCloseBtn.addEventListener('click', closeModal);
 
   modal.addEventListener('click', (e) => {
     if (e.target === modal) {
@@ -126,17 +127,19 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  //при нажатии на esc модальное окно закрывается
   document.addEventListener('keydown', (e) => {
-    if (event.which == 27 && modal.classList.contains('show')) {
+    if (e.code === "Escape" && modal.classList.contains('show')) {
       closeModal();
     }
   });
 
-  const modaTimerId = setTimeout()
+  const modalTimerId = setTimeout(openModal, 3000);
 
-
-
-
+  function showModalByScroll() {
+    if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+      openModal();
+      window.removeEventListener('scroll', showModalByScroll);
+    }
+  }
+  window.addEventListener('scroll', showModalByScroll);
 });
-
